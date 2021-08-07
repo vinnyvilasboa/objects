@@ -104,7 +104,7 @@ console.log(myPromise)
 
 
 function consumePromise(){
-    myPromise
+    myPromise //referencing the variable "myPromise" -- what to do with the promise created above once it's resolved or rejected
     .then(function(retrievedValue){
         console.log("fulfilled! retrievedValue is:", retrievedValue)
     }).catch(function(err){
@@ -116,4 +116,62 @@ var valueToRetrieve = "!!!"
 var myPromise = new Promise(myCallback);
 consumePromise();
 
+
+
+//another example
+
+function successCallback(result){
+    console.log("audio file ready at URL:" + result)
+}
+
+function failureCallback(error){
+    console.error("error generating audio file" + error);
+
+}
+
+createdAudioFileAsync(audioSettings, successCallback, failureCallback)
 //stopped right before chaining promises
+
+//another example
+
+
+/*
+1.Pending: You don’t know if you will get that phone
+2.Fulfilled: Mom is happy, she buys you a brand new phone
+3.Rejected: Mom is unhappy, she doesn’t buy you a phone
+*/
+
+/*
+===> promise syntax look like this <==//
+new Promise(function (resolve, reject) { ... } );
+*/
+
+
+let momIsHappy = true;
+
+let willIGetNewPhone = new Promise(
+    function (resolve, reject) { //after creating promise, pass the callbacks inside it.
+        if (momIsHappy) {
+            var phone = {
+                brand: 'apple',
+                color: 'white'
+            }
+            resolve(phone) // so if  isMomHappy = true then you get phone
+        } else {
+            var reason = new Error('mom is not happy');
+            reject(reason); //reject --> the reject arguments take in whatver parameters you want to display if it's true or false
+        }
+
+    }
+)
+
+let askMom = function() {
+    willIGetNewPhone 
+    .then(function(fulfilled){
+        console.log(fulfilled)
+    })
+    .catch(function(error){
+        console.log(error.message);
+    })
+}
+askMom();
